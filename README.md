@@ -39,18 +39,48 @@ Plateforme techno-politique de débats IA en temps réel, avec 4 personas pilot�
   - lever la main / pause / reprise / reset
   - stocker erreurs d’infrastructure (clé manquante, API indisponible)
 
-## Variables d’environnement (GitHub privé)
+## Variables d’environnement (où mettre les secrets ?)
 
-Configurer les secrets dans GitHub (Settings > Secrets and variables > Actions / Environment):
+### Production (Fly.io)
 
-- `OPENAI_API_KEY` (obligatoire)
-- `OPENAI_MODEL` (optionnel, défaut: `gpt-4.1`)
+Pour l'application en ligne (`tetrarchie-synthetique-v2.fly.dev`), les secrets doivent être définis **dans Fly.io** (pas dans GitHub Pages):
+
+```bash
+fly secrets set OPENAI_API_KEY=... OPENAI_MODEL=gpt-5.4 -a tetrarchie-synthetique-v2
+```
+
+Puis redéployer/redémarrer l'app Fly pour prise en compte.
+
+
+Noms exacts à créer dans Fly.io (et valeurs attendues):
+
+- `OPENAI_API_KEY` (**obligatoire**) : ta clé API OpenAI (ex: `sk-...`).
+- `OPENAI_MODEL` (**optionnel**) : modèle à utiliser (défaut du projet: `gpt-5.4`).
+
+Exemples commande par commande:
+
+```bash
+fly secrets set OPENAI_API_KEY=sk-... -a tetrarchie-synthetique-v2
+fly secrets set OPENAI_MODEL=gpt-5.4 -a tetrarchie-synthetique-v2
+```
+
+Format demandé par l'interface Fly.io:
+
+- **Name**: `OPENAI_API_KEY` / `OPENAI_MODEL`
+- **Secret**: la valeur réelle (clé ou nom de modèle)
+
+### GitHub (optionnel)
+
+Les secrets GitHub (`Settings > Secrets and variables > Actions`) ne servent que si vous utilisez un workflow GitHub Actions (CI/CD, déploiement automatisé, etc.).
+Actuellement, ce dépôt ne contient pas de workflow de déploiement Fly, donc ces secrets ne sont pas nécessaires pour faire tourner la prod.
+
+### Local
 
 En local, vous pouvez utiliser un `.env.local`:
 
 ```bash
 OPENAI_API_KEY=...
-OPENAI_MODEL=gpt-4.1
+OPENAI_MODEL=gpt-5.4
 ```
 
 ## Démarrage

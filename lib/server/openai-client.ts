@@ -1,6 +1,6 @@
 import OpenAI from 'openai';
 
-export const OPENAI_MODEL = process.env.OPENAI_MODEL || 'gpt-4.1';
+export const OPENAI_MODEL = process.env.OPENAI_MODEL || 'gpt-5.4';
 
 export function getOpenAIClient() {
   const apiKey = process.env.OPENAI_API_KEY;
