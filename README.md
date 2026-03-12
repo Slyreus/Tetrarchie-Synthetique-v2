@@ -77,6 +77,28 @@ Puis ouvrir `http://localhost:3000`.
 - `lib/debate-engine.ts` : rotation + meta + insertion humaine
 - `store/debate-store.ts` : état global client
 
+## Pourquoi GitHub Pages et Fly.io affichent des choses différentes ?
+
+- **Fly.io** exécute l'application Next.js avec un serveur Node (SSR + routes API).
+- **GitHub Pages** sert uniquement des fichiers statiques (HTML/CSS/JS), sans backend Node ni routes API Next.
+
+Résultat: la version Fly.io est la vraie app complète, tandis que GitHub Pages ne peut pas exécuter toute cette architecture.
+
+## Faire pointer GitHub Pages vers Fly.io (recommandé)
+
+Ce dépôt inclut `docs/index.html` et `docs/404.html` qui redirigent automatiquement vers:
+
+- `https://tetrarchie-synthetique-v2.fly.dev/`
+
+Configuration à appliquer dans GitHub:
+
+1. Repository **Settings** > **Pages**
+2. **Build and deployment** > **Source**: *Deploy from a branch*
+3. **Branch**: `main` et **Folder**: `/docs`
+4. Enregistrer
+
+Après propagation, `https://slyreus.github.io/Tetrarchie-Synthetique-v2/` redirigera vers Fly.io.
+
 ## Évolutions backend recommandées
 
 - persistance historique par salon (PostgreSQL)
