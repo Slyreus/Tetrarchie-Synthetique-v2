@@ -1,6 +1,7 @@
 'use client';
 
 import { create } from 'zustand';
+import { MAX_DEBATE_MESSAGES } from '@/lib/debate-engine';
 import { DebateConfig, DebateMessage, DebateMeta, DebateTurnResponse } from '@/lib/types';
 
 interface DebateState {
@@ -84,7 +85,7 @@ export const useDebateStore = create<DebateState>((set, get) => ({
 
   advanceDebate: async () => {
     const state = get();
-    if (!state.config || state.paused || state.loading) return;
+    if (!state.config || state.paused || state.loading || state.messages.length >= MAX_DEBATE_MESSAGES) return;
 
     set({ loading: true, error: null });
     try {
