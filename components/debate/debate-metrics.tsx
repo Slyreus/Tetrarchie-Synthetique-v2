@@ -11,7 +11,15 @@ export function DebateMetrics({ meta }: { meta: DebateMeta | null }) {
         <Metric label="Polarisation" value={formatPercent(meta.polarization)} />
         <Metric label="Axe dominant" value={meta.dominantAxis} />
         <Metric label="État" value={meta.globalState} />
+        <Metric label="Phase" value={meta.phase} />
+        <Metric label="Restant" value={`${meta.remainingMessages} msg`} />
       </div>
+      {meta.latestSummary ? (
+        <div>
+          <p className="mb-1 text-xs text-slate-400">Résumé intermédiaire</p>
+          <p className="text-xs text-slate-200">{meta.latestSummary}</p>
+        </div>
+      ) : null}
       <div>
         <p className="mb-1 text-xs text-slate-400">Consensus</p>
         <ul className="space-y-1 text-xs text-slate-200">
