@@ -67,7 +67,7 @@ Génère la prochaine prise de parole de ${PERSONA_LABELS[speakerId]}.`;
   const completion = await client.chat.completions.create({
     model: OPENAI_MODEL,
     temperature: 0.85,
-    max_tokens: 90,
+    max_completion_tokens: 90,
     messages: [
       { role: 'system', content: DEBATE_CONSTITUTION },
       { role: 'system', content: PERSONA_SYSTEM_PROMPTS[speakerId] },
