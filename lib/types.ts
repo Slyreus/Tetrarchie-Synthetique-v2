@@ -12,6 +12,11 @@ export type TensionLevel = 'Modéré' | 'Offensif' | 'Critique' | 'Crise';
 export type DebateDuration = 'Court' | 'Standard' | 'Approfondi';
 export type UserMode = 'Observateur' | 'Intervention ponctuelle' | 'Modérateur actif';
 export type DominantAngle = 'Social' | 'Sécuritaire' | 'Économique' | 'Équilibré' | 'Libre';
+export type DebatePhase =
+  | 'Analyse du problème'
+  | 'Proposition de solutions'
+  | 'Confrontation / critique'
+  | 'Synthèse finale';
 
 export interface Persona {
   id: AIId;
@@ -54,6 +59,10 @@ export interface DebateMeta {
   activeTopic: string;
   emergingSubthemes: string[];
   globalState: 'En cadence' | 'Pic de tension' | 'Arbitrage actif' | 'Pause';
+  phase: DebatePhase;
+  remainingMessages: number;
+  recommendedDelayMs: number;
+  latestSummary: string | null;
 }
 
 export interface DebateTurnRequest {

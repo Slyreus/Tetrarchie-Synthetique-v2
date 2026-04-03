@@ -13,19 +13,22 @@ export function DebateBoard() {
 
   useEffect(() => {
     if (!config || paused) return;
+    if (messages.length >= 30) return;
 
-    const paceMap = {
-      Lent: 3200,
-      Normal: 2200,
-      Nerveux: 1300
+    const paceMultiplier = {
+      Lent: 1.2,
+      Normal: 1,
+      Nerveux: 0.85
     } as const;
+    const baseDelay = Math.max(3000, Math.min(6000, meta?.recommendedDelayMs ?? 3200));
+    const nextDelay = Math.round(baseDelay * paceMultiplier[config.animationPace]);
 
-    const interval = setInterval(() => {
+    const timer = setTimeout(() => {
       void advanceDebate();
-    }, paceMap[config.animationPace]);
+    }, nextDelay);
 
-    return () => clearInterval(interval);
-  }, [advanceDebate, config, paused]);
+    return () => clearTimeout(timer);
+  }, [advanceDebate, config, paused, meta?.recommendedDelayMs, messages.length]);
 
   return (
     <div className="grid gap-4 lg:grid-cols-[310px,1fr,330px]">
@@ -48,7 +51,7 @@ export function DebateBoard() {
             <p className="text-xs uppercase tracking-[0.18em] text-slate-400">Sujet</p>
             <h2 className="text-lg font-semibold text-slate-100">{config?.topic ?? 'Salon non initialisé'}</h2>
           </div>
-          <span className="badge">{loading ? 'Génération...' : `${messages.length} interventions`}</span>
+          <span className="badge">{loading ? 'Génération...' : `${messages.length}/30 interventions`}</span>
         </div>
         <DebateStream />
       </main>
